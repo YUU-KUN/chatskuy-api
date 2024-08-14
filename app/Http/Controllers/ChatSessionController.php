@@ -60,8 +60,17 @@ class ChatSessionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ChatSession $chatSession)
+    public function destroy($id)
     {
-        //
+        try {
+            $chatSession = ChatSession::find($id);
+            if (!$chatSession) {
+                return Response::error('Chat session not found', 404);
+            }
+            $chatSession->delete();
+            return Response::success(null, 'Chat session deleted successfully');
+        } catch (\Throwable $th) {
+            return Response::error($th->getMessage());
+        }
     }
 }
