@@ -6,19 +6,19 @@ class Response
 {
     public static function success($data = null, $message = null)
     {
-        return [
+        return response()->json([
             'success' => true,
             'message' => $message,
             'data' => $data
-        ];
+        ], 200);
     }
 
-    public static function error($message = null, $data = null)
+    public static function error($message = null, $code = 500)
     {
-        return [
+        return response()->json([
             'success' => false,
             'message' => $message,
-            'data' => $data
-        ];
+            'data' => null
+        ], $code);
     }
 }
