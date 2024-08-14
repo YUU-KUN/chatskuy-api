@@ -7,6 +7,7 @@ use App\Helpers\Response;
 use App\Models\Chat;
 use App\Models\ChatSession;
 use Gemini\Laravel\Facades\Gemini;
+use Validator;
 
 class ChatController extends Controller
 {
@@ -41,13 +42,17 @@ class ChatController extends Controller
     public function store(Request $request)
     {
         try {
-            $validatedData = $request->validate([
+            $input = $request->all();
+            $validator = Validator::make($input, [
                 'message' => 'required|string',
-                'chat_session_id' => 'nullable|exists:chat_sessions,id',
+                'chat_session_id' => 'nullable|exists:chat_sessions,id', 
             ]);
-    
-            $input = $validatedData;
 
+            if ($validator->fails()) {
+                return Response::error($validator->errors()->first(), 400);
+            }
+
+            // Kalau tidak ada chat_session_id, buat sesi baru
             if (!isset($input['chat_session_id'])) {
                 $chat_session_data = [
                     'title' => $input['message'],
