@@ -11,7 +11,7 @@ Chatskuy Features:
 - Chat History: Easily access your previous conversations, allowing you to continue where you left off or revisit important discussions.
 
 Code Reference:
-None - I created it all by myself.
+- [Integrate Gemini API to Laravel](https://github.com/google-gemini-php/laravel)
 
 
 ## Installation Guide
